@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "name": "oKanban-Megafredo",
+  "version": "1.0.0",
+  "description": "## O'Kanban",
+  "main": "index.js",
+  "scripts": {
+    "start": "node-dev --notify=false --trace-warnings index.js",
+    "dev": "npx nodemon --inspect index.js",
+    "db:connect": "psql -U okanban -d okanban",
+    "db:create": "psql -U okanban -d okanban -f ./data/01-import_table.sql"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "Megafredo",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.1",
+    "email-validator": "^2.0.4",
+    "express": "^4.18.1",
+    "express-session": "^1.17.2",
+    "pg": "^8.7.3",
+    "sequelize": "^6.19.0"
+  }
+}

@@ -1,0 +1,183 @@
+### https://www.ibm.com/docs/en/cloud-paks/cp-management/2.1.x?topic=overview-http-basics
+@entryPoint = http://localhost:5000
+
+# //* ---------------------------------------------
+# //* --------------------------------------- CARDS 
+# //* ---------------------------------------------
+### FETCH ALL CARDS
+GET {{entryPoint}}/cards
+
+### CREATE CARD
+POST {{entryPoint}}/cards
+Content-Type: application/json
+# espace vide obligatoire
+
+{
+    "title": "Test5",
+    "order":2,
+    "description": "Motivation : RRRRREEEEE",
+    "color": "#FF9671",
+    "user_id" : 1,
+    "list_id" : 4
+}
+### FETCH ONE CARD
+GET {{entryPoint}}/cards/3
+
+### UPDATE CARD
+PATCH  {{entryPoint}}/cards/7
+Content-Type: application/json
+# espace vide obligatoire
+
+{
+    "title": "Coucou",
+    "order": 1,
+    "color": "#000",
+    "description": null
+}
+
+### DELETE CARD
+DELETE {{entryPoint}}/cards/200
+
+### FETCH ALL CARDS BY LIST ID
+GET {{entryPoint}}/lists/2/cards
+
+
+
+
+
+
+
+
+# //* ---------------------------------------------
+# //* ---------------------------------------- LIST 
+# //* ---------------------------------------------
+### FETCH ALL LISTS
+GET {{entryPoint}}/lists
+
+# //! Format d'écriture Très strict pour les tests
+# //! -----------------------------------------------
+
+###? TEST POST METHODE pour simulé un req.body au Format XML urlencoded
+### CREATE LIST
+POST {{entryPoint}}/lists
+# Méthode pour simulé un req.body au Format XML urlencoded
+Content-Type: application/x-www-form-urlencoded
+# espace vide obligatoire
+
+title=sample
+&order=3
+&user_id=1
+
+# //! -----------------------------------------------
+
+###? TEST POST METHODE pour simulé un req.body au Format JSON
+### CREATE LIST
+POST {{entryPoint}}/lists
+Content-Type: application/json
+# espace vide obligatoire
+
+{
+    "title": "Suniiiiiiiiiiii",
+    "order":1,
+    "description": "REEEEEEEEEEEEEEEEE",
+    "user_id": 1
+}
+
+# //! -----------------------------------------------
+
+### FETCH ONE LIST
+GET {{entryPoint}}/lists/1
+### UPDATE LIST
+PATCH  {{entryPoint}}/lists/1
+Content-Type: application/json
+# espace vide obligatoire
+
+{
+    "order": 2
+
+}
+### DELETE LIST
+DELETE {{entryPoint}}/lists/2
+
+
+
+
+
+
+
+# //* ---------------------------------------------
+# //* ----------------------------------------- TAG
+# //* ---------------------------------------------
+### ALL TAGS
+GET {{entryPoint}}/tags
+
+### CREATE TAG
+POST {{entryPoint}}/tags
+Content-Type: application/json
+
+{
+    "name": "Gaëtan & Sunii Color"
+}
+
+### ONE TAG
+GET {{entryPoint}}/tags/32
+
+### UPDATE TAG
+PATCH {{entryPoint}}/tags/15
+Content-Type: application/json
+
+{
+    "name": "coucoud",
+    "color": "#FF5900"
+}
+
+### DELETE TAG
+DELETE  {{entryPoint}}/tags/14
+
+
+### ADD AS WITH TAG
+PUT {{entryPoint}}/cards/1/tags/2
+#/cards/:cardId/tags/:tagId
+
+### FIND OR CREATE TAG
+PUT {{entryPoint}}/cards/1/tags/note
+#/cards/:cardId/tags/:tagName
+
+### FETCH ALL TAGS BY CARD ID
+GET {{entryPoint}}/cards/1/tags
+
+### DELETE TAG BY CARD ID
+DELETE  {{entryPoint}}/cards/1/tags/2
+
+
+
+
+
+
+# //* ---------------------------------------------
+# //* ---------------------------------------- USER
+# //* ---------------------------------------------
+
+###
+GET {{entryPoint}}/kanban/
+
+###
+GET {{entryPoint}}/profile/
+
+###
+POST {{entryPoint}}/signin/
+
+###
+POST {{entryPoint}}/signup/
+
+###
+PATCH {{entryPoint}}/profile/
+
+###
+DELETE {{entryPoint}}/profile/
+
+###
+PUT {{entryPoint}}/profile/
+
+
+
