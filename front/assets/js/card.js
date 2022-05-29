@@ -3,6 +3,7 @@ import { tag } from './tag.js';
 import { list } from './list.js';
 import * as select from './selector.js';
 import { base_url, cards_url } from './index.js';
+import { dragCard } from './dragcard.js';
 
 const card = {
 
@@ -18,10 +19,12 @@ const card = {
     - Delete Card
     */
 
+  
+
     // &  -------------------------------------------------------------------------
     // & ---------------------------------------------------------------- POST CARD
     // API: title/order/description/color/user_id/list_id
-    async postCard(cardTitle,cardOrder ,cardDescription, cardColor, cardUserId, cardListId) {
+    async postCardTest(cardTitle, cardDescription, cardColor, cardUserId, cardListId) {
 
         const cardURL = `${base_url}${cards_url}`;
         
@@ -30,7 +33,7 @@ const card = {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
                 "title": cardTitle, 
-                "order": cardOrder,
+                // "order": cardOrder,
                 "color": cardColor,
                 "description" : cardDescription, 
                 "list_id": cardListId,
@@ -111,6 +114,38 @@ const card = {
         }
     },
 
+    
+    // & -----------------------------------------------------------------------------------------------
+    // & ----------------------------------------------------------------------------------------------- PATCH EDIT CARD DRAG AND DROP
+
+    async patchEditCardDragAndDrop(cardId, editCardOrder, editCardListId){
+
+        const urlCardEdit = `${base_url}${cards_url}${cardId}`;
+
+        const options = {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                "order": editCardOrder,
+                "list_id": editCardListId
+            }),
+        }
+
+        const response = await fetch(urlCardEdit, options);
+
+        if(response.ok){
+            await response.json();
+
+            cardEditForm.querySelector('.card-name').textContent = editCardTitle;
+            cardEditForm.querySelector('.card-description').textContent = editCardDescription;
+            cardEditForm.querySelector('.columns').style.borderBottom = `1px solid ${editCardColor}`;
+            cardEditForm.style.borderTop = `4px solid ${editCardColor}`;
+
+        } else {
+            throw new Error(`Impossible d'éditer la carte, problème serveur`);
+        }
+    },
+
 
     // & -----------------------------------------------------------------------------------------------
     // & ----------------------------------------------------------------------------------------------- DELETE CARD
@@ -162,7 +197,13 @@ const card = {
         clone.querySelector('.cardStart').style.borderTop = `4px solid ${cardColor}`;
         clone.querySelector('.columns').style.borderBottom = `1px solid ${cardColor}`;
         clone.querySelector('[data-card-color]').dataset.cardColor = cardColor;
+
+        clone.querySelector('.cardStart').addEventListener('dragstart', dragCard.dragStartCard)
+        clone.querySelector('.cardStart').addEventListener('dragover', dragCard.dragOverCard)
+        clone.querySelector('.cardStart').addEventListener('dragleave', dragCard.dragLeaveCard)
+        clone.querySelector('.cardStart').addEventListener('drop', dragCard.dragDropCard)
         
+        // document.querySelector("[data-list-id='" + cardListId + "'] .panel-block container-drop-card").append(clone);
         document.querySelector("[data-list-id='" + cardListId + "'] .panel-block").append(clone);
         
         //fix refacto
@@ -202,9 +243,10 @@ const card = {
         const cardColor = data.get('cardColor');
         const cardListId = data.get('cardListId');
         const cardDescription = data.get('cardDescription');
-        const cardOrder = select.dataCardOrder().dataset.cardOrder;
+        // const cardOrder = select.dataCardOrder().dataset.cardOrder;
 
-        card.postCard(cardTitle, cardOrder ,cardDescription, cardColor, '', cardListId);
+
+        card.postCardTest(cardTitle ,cardDescription, cardColor,'', cardListId);
 
         select.addCardModal.classList.remove('is-active');
     },
