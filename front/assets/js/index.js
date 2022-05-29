@@ -1,5 +1,5 @@
 //~ IMPORTATIONS
-import { list } from './list.js';
+import { list } from "./list.js";
 
 //*------------------------------------------------------------------
 //*---------------------------------------------------------- API ---
@@ -13,8 +13,6 @@ export const tags_url = `/tags/`;
 //~ INITIALISATION
 list.init();
 
-
-  
-    // TODO  - Finir le Drag and Drop carte
-    // TODO  - Reporter tout les changements sur l'ancien code (non refacto)
-    // TODO  - CSS virée tout les !importants
+// TODO  - Finir le Drag and Drop carte
+// TODO  - Reporter tout les changements sur l'ancien code (non refacto)
+// TODO  - CSS virée tout les !importants

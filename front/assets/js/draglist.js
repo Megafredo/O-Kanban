@@ -5,7 +5,7 @@ const draglist = {
     //* CONCERNE TOUT LES ELEMENTS ORIGINEL
    //^ ----------------------------------------------------------------------------------------------- DRAG START LIST
     dragStartList(event){
-               
+        // event.stopPropagation();
         //~ DESIGN EFFECT
         this.style.opacity = '0.5';
         
@@ -52,8 +52,8 @@ const draglist = {
         this.style.opacity = '1';
 
         //~ RECUPERATION D'UN DATATRANSFER
-        const getDataTransferOrigin = JSON.parse(event.dataTransfer.getData("application/json"))
-        let { originOrder, originId } = getDataTransferOrigin
+        const getDataTransferOrigin = JSON.parse(event.dataTransfer.getData("application/json"));
+        let { originOrder, originId } = getDataTransferOrigin;
 
         //~ ELEMENT TARGET ID
         let targetId = event.target.closest(`[data-list-id]`).dataset.listId;
@@ -93,7 +93,7 @@ const draglist = {
         list.patchEditListDragAndDrop(originId, swapOrderOriginTarget);
 
         // event.stopPropagation();
-        // event.dataTransfer.clearData();
+        event.dataTransfer.clearData();
     },
 
    
