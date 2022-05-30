@@ -24,6 +24,7 @@ const card = {
     // &  -------------------------------------------------------------------------
     // & ---------------------------------------------------------------- POST CARD
     // API: title/order/description/color/user_id/list_id
+    // POST: [adress]/cards
     async postCardTest(cardTitle, cardDescription, cardColor, cardUserId, cardListId) {
 
         const cardURL = `${base_url}${cards_url}`;
@@ -56,6 +57,7 @@ const card = {
 
     // & -----------------------------------------------------------------------------------------------
     // & ----------------------------------------------------------------------------------------------- FETCH ALL CARDS
+    // GET: [adress]/cards
     async fetchAllCards() {
 
         const url = `${base_url}${cards_url}`;
@@ -82,7 +84,7 @@ const card = {
 
     // & -----------------------------------------------------------------------------------------------
     // & ----------------------------------------------------------------------------------------------- PATCH EDIT CARD
-
+    // PATCH: [adress]/cards/[:cardId]
     async patchEditCard(cardId, editCardTitle, editCardOrder, editCardColor , editCardDescription, editCardUserId, editCardListId, cardEditForm){
 
         const urlCardEdit = `${base_url}${cards_url}${cardId}`;
@@ -117,10 +119,12 @@ const card = {
     
     // & -----------------------------------------------------------------------------------------------
     // & ----------------------------------------------------------------------------------------------- PATCH EDIT CARD DRAG AND DROP
-
-    async patchEditCardDragAndDrop(cardId, editCardOrder, editCardListId){
-
+    // PATCH: [adress]/cards/[:cardId]
+    async patchEditCardDragAndDrop(cardId, editCardListId, editCardOrder){
+      
         const urlCardEdit = `${base_url}${cards_url}${cardId}`;
+
+
 
         const options = {
             method: 'PATCH',
@@ -131,15 +135,26 @@ const card = {
             }),
         }
 
+          
+        if(editCardOrder === undefined){
+            
+
+            const response = await fetch(urlCardEdit, options);
+
+            if(response.ok){
+                await response.json();
+                // location.reload();
+
+            } else {
+                throw new Error(`Impossible d'éditer la carte, problème serveur`);
+            }
+
+        }
+
         const response = await fetch(urlCardEdit, options);
 
         if(response.ok){
             await response.json();
-
-            cardEditForm.querySelector('.card-name').textContent = editCardTitle;
-            cardEditForm.querySelector('.card-description').textContent = editCardDescription;
-            cardEditForm.querySelector('.columns').style.borderBottom = `1px solid ${editCardColor}`;
-            cardEditForm.style.borderTop = `4px solid ${editCardColor}`;
 
         } else {
             throw new Error(`Impossible d'éditer la carte, problème serveur`);
@@ -149,7 +164,7 @@ const card = {
 
     // & -----------------------------------------------------------------------------------------------
     // & ----------------------------------------------------------------------------------------------- DELETE CARD
-
+    // DELETE: [adress]/cards/[:cardId]
     async deleteCard(cardId){
 
         const cardURL = `${base_url}${cards_url}${cardId}`;
@@ -199,6 +214,7 @@ const card = {
         clone.querySelector('[data-card-color]').dataset.cardColor = cardColor;
 
         clone.querySelector('.cardStart').addEventListener('dragstart', dragCard.dragStartCard)
+        clone.querySelector('.cardStart').addEventListener('dragend', dragCard.dragEndCard)
         clone.querySelector('.cardStart').addEventListener('dragover', dragCard.dragOverCard)
         clone.querySelector('.cardStart').addEventListener('dragleave', dragCard.dragLeaveCard)
         clone.querySelector('.cardStart').addEventListener('drop', dragCard.dragDropCard)

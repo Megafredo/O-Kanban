@@ -75,6 +75,7 @@ const draglist = {
         
         targetId = +targetId;
         targetOrder = +targetOrder;
+
         
         //~ SWAP DATA
         const swapOrderOriginTarget = (getElemOriginOrder.dataset.listOrder = targetOrder); //Origin modif

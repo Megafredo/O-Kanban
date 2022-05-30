@@ -23,7 +23,7 @@ Card.init({
 
     order: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
 
     color: {
