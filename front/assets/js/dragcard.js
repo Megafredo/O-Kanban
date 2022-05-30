@@ -1,3 +1,5 @@
+//~IMPORTATIONS
+import { card } from './card.js'
 const dragCard = {
 
     //~ --------------------------------------------------------- DRAG START CARD
@@ -20,15 +22,16 @@ const dragCard = {
         //& ------------------------ SET DATA TRANSFERT
         event.dataTransfer.setData("application/json", JSON.stringify({ originId, originOrder, originListId }));
         
-        
-        //& CONSOLE LOG
-        
-        // console.log('------------------------- DRAG');
-        // console.log("originId: ", originId);
-        // console.log("originOrder: ", originOrder);
-        // console.log("originListId: ", originListId);
-        // console.log('-------------------------');
     },
+
+     //~ --------------------------------------------------------- DRAG END CARD
+
+     dragEndCard(event){
+        this.style.opacity = '1';
+        this.style.transition = '0.3s ease';
+     },
+
+
 
 
     //~ --------------------------------------------------------- DRAG OVER CARD
@@ -52,7 +55,7 @@ const dragCard = {
         event.preventDefault();
         //& ------------------------ DESIGN EFFECT
         this.style.opacity = '1';
-        this.style.transition = '0.5s ease';
+        this.style.transition = '0.3s ease';
     },
 
 
@@ -64,7 +67,8 @@ const dragCard = {
         event.preventDefault();
         //& ------------------------ DESIGN EFFECT
         this.style.opacity = '1';
-        this.style.transition = '0.5s ease'
+        this.style.transition = '0.3s ease'
+
 
         //& ------------------------ GET DATA TRANSFERT
         const dataTransfer = JSON.parse(event.dataTransfer.getData("application/json"));
@@ -77,7 +81,7 @@ const dragCard = {
         let targetId = this.dataset.cardId;
         
         //& ------------------------ TARGET ORDER CARD
-        let targetOrder = this.dataset.cardId;
+        let targetOrder = this.dataset.cardOrder;
 
         //& ------------------------ TARGET ID LIST
         let targetListId = event.target.closest('[data-list-id]').dataset.listId;
@@ -87,7 +91,7 @@ const dragCard = {
  
 
 
-        //& CONVERT NUMBER
+        //& CONVERT STRING EN NUMBER
         originId = +originId;
         originOrder = +originOrder;
         originListId = +originListId;
@@ -98,44 +102,90 @@ const dragCard = {
         targetOrder = +targetOrder;
         targetListId = +targetListId;
         
-        //& SWAP ORDER
-        const swapOrderOriginTarget = (getElemOriginCard.dataset.cardOrder = targetOrder); //Origin modif
-        const swapOrderTargetOrigin = (getElemTargetCard.dataset.cardOrder = dataTempOrder); //Target modif
-
+      
+        
         //& ------------------------ DROP CONTAINER        
         const containerStartCard = getElemOriginCard.parentNode;
         const containerEndCard = event.target.closest('.container-drop-card');
-
-        containerStartCard.append(getElemTargetCard)
-        containerEndCard.append(getElemOriginCard)
-
-
-        // SI LIST ID ORIGIN ET DIFFERENT DE TARGET ALORS ON FAIT PAS DE SWAP
+        const zoneCards = event.target.closest('.panel-block');
+        console.log("zoneCards: ", zoneCards);
         
-
-
-
         
-        //& CONSOLE LOG
+        
+        // SI LIST ID ORIGIN ET DIFFERENT DE TARGET
+        // Dans le cas ou la liste est différente alors on fait un patch pour intégrer la nouvelle carte
+        // Et seulement après on peut swap l'ordre des cartes
+
+        if( originListId !== targetListId){
+
+            // containerEndCard.before(containerStartCard);
+            zoneCards.insertAdjacentElement("afterbegin", containerStartCard)
+
+            const allCardsTarget = zoneCards.querySelectorAll('.cardStart');
+            let cardsElement = [];
+            
+            for (const elem of allCardsTarget) {
+                const cardOrder = elem.getAttribute('data-card-order');
+                cardsElement.push(cardOrder);
+            }
+            
+            cardsElement.sort((a, b) => a - b);
+            console.log("cardsElement: ", cardsElement);
+
+            for (let index = 0; index < allCardsTarget.length; index++) {
+
+                const newCardOrder = cardsElement[index];
+                const cardElement = allCardsTarget[index];
+                const getCardId = cardElement.getAttribute('data-card-id');
+                cardElement.setAttribute('data-card-order', `${newCardOrder}`);
+
+                //& MISE A JOUR VERS L'API
+                card.patchEditCardDragAndDrop(getCardId, targetListId, newCardOrder);
+                
+            }
+          
+
+        } else {
+
+
+            //& SWAP ORDER
+            const swapOrderOriginTarget = (getElemOriginCard.dataset.cardOrder = targetOrder); //Origin modif
+            const swapOrderTargetOrigin = (getElemTargetCard.dataset.cardOrder = dataTempOrder); //Target modif
+
+            // On swap les cartes entre elles
+            containerStartCard.append(getElemTargetCard);
+            containerEndCard.append(getElemOriginCard);
+
+            //& MISE A JOUR VERS L'API (Info swap des cartes)
+            card.patchEditCardDragAndDrop(originId, originListId, swapOrderOriginTarget);
+            card.patchEditCardDragAndDrop(targetId, targetListId, swapOrderTargetOrigin);
+
+        }
+        
+        
+        
+        
+        
+        // //& CONSOLE LOG
         // console.log('------------------------- DROP');
         // console.log("originId: ", originId);
         // console.log("originOrder: ", originOrder);
         // console.log("originListId: ", originListId);
-        // console.log("elemOriginCard: ", elemOriginCard);
+        // console.log("getElemOriginCard: ", getElemOriginCard);
         // console.log('-------------------------');
         // console.log("targetId: ", targetId);
         // console.log("targetOrder: ", targetOrder);
         // console.log("targetListId: ", targetListId);
-        // console.log("elemTargetCard: ", elemTargetCard);
+        // console.log("getElemTargetCard: ", getElemTargetCard);
         // console.log('-------------------------');
         // console.log("zoneCards: ", zoneCards);
+        // console.log("swapOrderOriginTarget: ", swapOrderOriginTarget);
+        // console.log("swapOrderTargetOrigin: ", swapOrderTargetOrigin);
         // console.log('-------------------------');
-
-
- 
-        // cardId, order, cardListId)
-        // card.patchEditCardDragAndDrop(targetId, swapOrderTargetOrigin);
-
+        // console.log('------------------------- SWAP');
+        // console.log("swapOrderOriginTarget: ", swapOrderOriginTarget);
+        // console.log("swapOrderTargetOrigin: ", swapOrderTargetOrigin);
+        // console.log('-------------------------');
 
 
     },

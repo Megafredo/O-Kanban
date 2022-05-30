@@ -29,20 +29,20 @@ VALUES
     ('Le titre n''as aucun sens','...la description aussi',2),
     ('Le dev c''est cool !','Mais attention aux coups de soleil ;)',3);
 
-INSERT INTO "card"("title", "order", "color", "description", "user_id", "list_id")
+INSERT INTO "card"("title","color", "description", "user_id", "list_id")
 VALUES
-    ('1 Title Card 1',1,'#F9F871','Les choses à faire',1, 1),
-    ('2 Title Card 2',2,'#FFC75F','Les choses à faire',2, 1),
-    ('3 Title Card 3',3,'#FF9671','Les choses à faire',3, 1),
-    ('1 Title Card 1',1,'#FF6F91','Les choses à faire',1, 2),
-    ('2 Title Card 2',2,'#D65DB1','Les choses à faire',2, 2),
-    ('3 Title Card 3',3,'#845EC2','Les choses à faire',3, 2),
-    ('1 Title Card 1',1,'#2C73D2','Les choses à faire',1, 3),
-    ('2 Title Card 2',2,'#0081CF','Les choses à faire',2, 3),
-    ('3 Title Card 3',3,'#0089BA','Les choses à faire',3, 3),
-    ('1 Title Card 1',1,'#008E9B','Les choses à faire',1, 4),
-    ('2 Title Card 2',2,'#008F7A','Les choses à faire',2, 4),
-    ('3 Title Card 3',3,'#00C9A7','Les choses à faire',3, 4);
+    ('1 Title Card 1','#F9F871','Les choses à faire',1, 1),
+    ('2 Title Card 2','#FFC75F','Les choses à faire',2, 1),
+    ('3 Title Card 3','#FF9671','Les choses à faire',3, 1),
+    ('1 Title Card 1','#FF6F91','Les choses à faire',1, 2),
+    ('2 Title Card 2','#D65DB1','Les choses à faire',2, 2),
+    ('3 Title Card 3','#845EC2','Les choses à faire',3, 2),
+    ('1 Title Card 1','#2C73D2','Les choses à faire',1, 3),
+    ('2 Title Card 2','#0081CF','Les choses à faire',2, 3),
+    ('3 Title Card 3','#0089BA','Les choses à faire',3, 3),
+    ('1 Title Card 1','#008E9B','Les choses à faire',1, 4),
+    ('2 Title Card 2','#008F7A','Les choses à faire',2, 4),
+    ('3 Title Card 3','#00C9A7','Les choses à faire',3, 4);
 
 INSERT INTO "card_has_tag"("card_id", "tag_id") VALUES
 (1,1),

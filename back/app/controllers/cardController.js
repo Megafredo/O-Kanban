@@ -13,7 +13,7 @@ async function fetchAllCards(req, res){
 
         const allCards = await Card.findAll({
             attributes : { exclude: ['created_at', 'updated_at'] },
-            order: ['order']
+            order: [['order', 'ASC']]
         });
         res.json(allCards);
 
@@ -28,11 +28,12 @@ async function createCard(req, res){
 
     try {
 
-        let {title, order, description, color} = req.body;
+        let {title, description, color} = req.body;
 
-        assert.ok(title && order, `Le titre ou la position de la carte doit être précisée` )
+        assert.ok(title, `Le titre ou la position de la carte doit être précisée` )
+        // assert.ok(title && order, `Le titre ou la position de la carte doit être précisée` )
         assert.ok(description, `La description de la carte doit être précisée`);
-        assert.ok(!isNaN(order), `Invalid body parameter 'order'. Should provide a number.`);
+        // assert.ok(!isNaN(order), `Invalid body parameter 'order'. Should provide a number.`);
         
         await Card.create({ ...req.body });
 
