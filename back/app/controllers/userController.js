@@ -36,15 +36,15 @@ async function signInUser(req, res) {
     try {
 
         const { email, password } = req.body;
-        if (!emailValidator.validate(email)) return res.json(`Email non valide`);
+        if(!emailValidator.validate(email)) return res.json(`Email non valide`);
 
         const user = await User.findOne({
             where: { email }
         });
-        if (!user) return res.json(`L'utilisateur n'existe pas`);
+        if(!user) return res.json(`L'utilisateur n'existe pas`);
 
         const validePwd = await bcrypt.compare(password, user.password);
-        if (!validePwd) return res.json(`Email ou mot de passe non valide`);
+        if(!validePwd) return res.json(`Email ou mot de passe non valide`);
 
         res.status(200).json(`Bienvenue ${user.firstname} ${user.lastname.toUpperCase()}`);
 
@@ -58,7 +58,31 @@ async function signInUser(req, res) {
 async function createUser(req, res) {
     try {
 
+        let {firstname, lastname, email, password, passwordConfirm} = req.body;
 
+        const user = await User.findOne({where:{email}});
+
+        // Les vérifications
+
+        if(firstname === undefined) return res.json(`Merci de renseigner un "Prénom"`);
+        if(lastname === undefined) return res.json(`Merci de renseigner un "Nom"`);
+
+        if(user) return res.json(`L'email existe déjà`);
+        if(!emailValidator.validate(email)) return res.json(`Email non valide`);
+        if(!schema.validate(password)) return res.json(`Le mot de passe ne remplis pas les contraintes sécurités`)
+        if(password !== passwordConfirm) return res.json(`Les mots de passe ne sont pas identiques`);
+
+        // Une fois toute les sécurités passé alors on crée l'utilisateur
+        // Dans un premier temps on Hash le password
+        const salt = await bcrypt.genSalt(10);
+        password = await bcrypt.hash(password, salt);
+
+        // Création de l'utilisateur
+        await User.create({
+            ...req.body, password
+        })
+        
+        res.status(200).json(`L'utilisateur ${firstname} ${lastname}, à bien été crée !`)
 
     } catch (err) {
         _500(err, req, res);
