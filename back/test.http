@@ -159,25 +159,27 @@ DELETE  {{entryPoint}}/cards/1/tags/2
 # //* ---------------------------------------------
 
 ###
-GET {{entryPoint}}/kanban/
+GET {{entryPoint}}/users/profile/1
 
 ###
-GET {{entryPoint}}/profile/
+POST {{entryPoint}}/users/profile
+Content-Type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "a"
+}
 
 ###
-POST {{entryPoint}}/signin/
+POST {{entryPoint}}/users/profile/
+
 
 ###
-POST {{entryPoint}}/signup/
+PATCH {{entryPoint}}/users/profile/1
 
 ###
-PATCH {{entryPoint}}/profile/
+DELETE {{entryPoint}}/users/profile/1
 
-###
-DELETE {{entryPoint}}/profile/
-
-###
-PUT {{entryPoint}}/profile/
 
 
 

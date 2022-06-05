@@ -5,7 +5,7 @@ const draglist = {
     //* CONCERNE TOUT LES ELEMENTS ORIGINEL
    //^ ----------------------------------------------------------------------------------------------- DRAG START LIST
     dragStartList(event){
-        // event.stopPropagation();
+        event.stopPropagation();
         //~ DESIGN EFFECT
         this.style.opacity = '0.5';
         
@@ -25,6 +25,7 @@ const draglist = {
      //* CONCERNE TOUT LES ELEMENTS CIBLES
     //^ ------------------------------------------------------------------ DRAG OVER LIST
     dragOver(event){
+        event.stopPropagation();
         //~ EVENT PREVENT DEFAULT
         event.preventDefault();
         //~ DESIGN EFFECT
@@ -33,6 +34,7 @@ const draglist = {
 
     //^ ------------------------------------------------------------------ DRAG LEAVE LIST
     dragLeave(event){
+        event.stopPropagation();
         //~ EVENT PREVENT DEFAULT
         event.preventDefault();
 
@@ -44,6 +46,7 @@ const draglist = {
     //^ ------------------------------------------------------------------ DRAG DROP LIST
     dragDrop(event){
 
+        event.stopPropagation();
         //~ EVENT PREVENT DEFAULT
         event.preventDefault();
 
@@ -93,7 +96,7 @@ const draglist = {
         list.patchEditListDragAndDrop(targetId, swapOrderTargetOrigin);
         list.patchEditListDragAndDrop(originId, swapOrderOriginTarget);
 
-        // event.stopPropagation();
+        
         event.dataTransfer.clearData();
     },
 

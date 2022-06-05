@@ -7,8 +7,8 @@ function _401(req, res) {
 function _403(req, res) {
     res.status(403).send('ACCESS DENIED')};
 
-export default function _404(err, req, res) {
-    res.status(404).json({"Error 404": err.message ? err.message : "PAGE NOT FOUND"})};
+export default function _404(req, res) {
+    res.status(404).json("Error 404")};
 
 function _500(err,req, res) {
     res.status(500).json({"Error 500" : err.message});

@@ -213,6 +213,7 @@ const list = {
         clone.querySelector('[data-list-order').dataset.listOrder = listOrder;
         clone.querySelector('.list-order').setAttribute('value', `${listOrder}`);
         clone.querySelector('.list-user-id').setAttribute('value', `${listUserId}`);
+        
         clone.querySelector('#listId').addEventListener('dragstart', draglist.dragStartList);
         clone.querySelector('#listId').addEventListener('dragover', draglist.dragOver);
         clone.querySelector('#listId').addEventListener('dragleave', draglist.dragLeave);

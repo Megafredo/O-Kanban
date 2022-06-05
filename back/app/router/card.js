@@ -1,5 +1,5 @@
 //~ IMPORTATIONS
-import {Router} from 'express';
+import { Router } from 'express';
 import { fetchAllCards, createCard, fetchOneCard, updateCard, deleteCard, fetchAllCardsByListId } from '../controllers/cardController.js';
 const router = Router();
 
@@ -14,5 +14,4 @@ router.delete('/cards/:id', deleteCard);
 
 router.get('/lists/:id/cards', fetchAllCardsByListId);
 
-
-export {router};
+export { router };

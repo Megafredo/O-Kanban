@@ -1,18 +1,16 @@
 //~ IMPORTATIONS
-import {Router} from 'express';
+import { Router } from 'express';
 const router = Router();
+import { fetchOneUser, createUser, updateUser, deleteUser, signInUser } from "../controllers/userController.js"
 
 //* --------------------------- USER
-// Render
-router.get('/kanban');
-router.get('/profile/');
 
-// inscription - connexion
-router.post('/signup');
-router.post('/signin');
+router.post('/users/profile', signInUser); // Connexion signIn
+router.get('/users/profile/:id', fetchOneUser); // Render Profil
 
-// Modifier - delete 
-router.patch('/profile/:id');
-router.delete('/profile/:id');
+router.post('/users/profile', createUser); // Inscription signUp
+
+router.patch('/users/profile/:id', updateUser); // Update
+router.delete('/users/profile/:id', deleteUser); // Delete
 
 export { router };
