@@ -8,6 +8,7 @@ const dragCard = {
         event.stopPropagation();
       
         //& ------------------------ DESIGN EFFECT
+        // Cette méthode permet de garder une image résiduel même si l'opacity était à 0
         setTimeout(() =>( this.style.opacity = '0.5'), 0);
 
         //& ------------------------ ORIGIN ID CARD
@@ -20,7 +21,12 @@ const dragCard = {
         const originListId = event.target.closest('[data-list-id]').dataset.listId;
         
         //& ------------------------ SET DATA TRANSFERT
-        event.dataTransfer.setData("application/json", JSON.stringify({ originId, originOrder, originListId }));
+        event.dataTransfer.setData('application/json', JSON.stringify({ originId, originOrder, originListId }));
+
+
+
+
+
         
     },
 
@@ -30,8 +36,6 @@ const dragCard = {
         this.style.opacity = '1';
         this.style.transition = '0.3s ease';
      },
-
-
 
 
     //~ --------------------------------------------------------- DRAG OVER CARD
@@ -69,11 +73,14 @@ const dragCard = {
         this.style.opacity = '1';
         this.style.transition = '0.3s ease'
 
-
         //& ------------------------ GET DATA TRANSFERT
-        const dataTransfer = JSON.parse(event.dataTransfer.getData("application/json"));
+        const dataTransfer = JSON.parse(event.dataTransfer.getData('application/json'));
         let {originId, originOrder, originListId } = dataTransfer;
         
+        // console.log(event.target.closest('.panel-block').hasChildNodes());
+
+
+
         //& ------------------------ ELEMENT ORIGIN CARD
         let getElemOriginCard = document.querySelector(`[data-card-id="${originId}"]`)
         
@@ -108,14 +115,9 @@ const dragCard = {
         const containerStartCard = getElemOriginCard.parentNode;
         const containerEndCard = event.target.closest('.container-drop-card');
         const zoneCards = event.target.closest('.panel-block');
-        console.log("zoneCards: ", zoneCards);
-        
         
         
         // SI LIST ID ORIGIN ET DIFFERENT DE TARGET
-        // Dans le cas ou la liste est différente alors on fait un patch pour intégrer la nouvelle carte
-        // Et seulement après on peut swap l'ordre des cartes
-
         if( originListId !== targetListId){
 
             // containerEndCard.before(containerStartCard);
@@ -129,9 +131,8 @@ const dragCard = {
                 cardsElement.push(cardOrder);
             }
             
+            // trie les éléments du tableau du plus petit au plus grand
             cardsElement.sort((a, b) => a - b);
-            console.log("cardsElement: ", cardsElement);
-
             for (let index = 0; index < allCardsTarget.length; index++) {
 
                 const newCardOrder = cardsElement[index];
@@ -161,32 +162,11 @@ const dragCard = {
             card.patchEditCardDragAndDrop(targetId, targetListId, swapOrderTargetOrigin);
 
         }
-        
-        
-        
-        
-        
-        // //& CONSOLE LOG
-        // console.log('------------------------- DROP');
-        // console.log("originId: ", originId);
-        // console.log("originOrder: ", originOrder);
-        // console.log("originListId: ", originListId);
-        // console.log("getElemOriginCard: ", getElemOriginCard);
-        // console.log('-------------------------');
-        // console.log("targetId: ", targetId);
-        // console.log("targetOrder: ", targetOrder);
-        // console.log("targetListId: ", targetListId);
-        // console.log("getElemTargetCard: ", getElemTargetCard);
-        // console.log('-------------------------');
-        // console.log("zoneCards: ", zoneCards);
-        // console.log("swapOrderOriginTarget: ", swapOrderOriginTarget);
-        // console.log("swapOrderTargetOrigin: ", swapOrderTargetOrigin);
-        // console.log('-------------------------');
-        // console.log('------------------------- SWAP');
-        // console.log("swapOrderOriginTarget: ", swapOrderOriginTarget);
-        // console.log("swapOrderTargetOrigin: ", swapOrderTargetOrigin);
-        // console.log('-------------------------');
 
+
+  
+        
+        event.dataTransfer.clearData();
 
     },
 
