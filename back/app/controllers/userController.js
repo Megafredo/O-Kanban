@@ -92,7 +92,6 @@ async function updateUser(req, res) {
         if (isNaN(idUser)) return res.json(`Id doit être un nombre`);
 
         const user = await User.findByPk(idUser);
-        console.log('user: ', user);
         if (!user) return res.json(`L'utilisateur n'existe pas`);
 
 
@@ -112,7 +111,6 @@ async function updateUser(req, res) {
         password === undefined ? (password = user.password) : (password = await bcrypt.hash(password, salt));
 
         email === undefined ? (email = user.email) : email;
-        console.log('email: ', email);
 
 
 
@@ -130,6 +128,18 @@ async function updateUser(req, res) {
 //~------------------------------------------- DELETE USER
 async function deleteUser(req, res) {
     try {
+
+        const idUser = +req.params.id
+        if(isNaN(idUser)) return res.json(`Id doit être un nombre`);
+
+        const user = await User.findOne({where: {id:idUser}})
+        if (!user) return res.json(`L'utilisateur n'existe pas`);
+
+        await User.destroy({where:{id: idUser}});
+
+        res.status(200).json('Utilisateur à bien été supprimé !')
+
+
     } catch (err) {
         _500(err, req, res);
     }
