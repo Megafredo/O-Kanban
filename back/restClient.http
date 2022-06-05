@@ -184,7 +184,13 @@ Content-Type: application/json
 
 
 ###
-PATCH {{entryPoint}}/users/profile/1
+PATCH {{entryPoint}}/users/profile/2
+Content-Type: application/json
+
+{
+    "firstname":"b",
+    "email": "b@b.com"
+}
 
 ###
 DELETE {{entryPoint}}/users/profile/1
