@@ -159,7 +159,7 @@ DELETE  {{entryPoint}}/cards/1/tags/2
 # //* ---------------------------------------------
 
 ###
-GET {{entryPoint}}/users/profile/4
+GET {{entryPoint}}/users/profile/3
 
 ###
 POST {{entryPoint}}/users/signin
@@ -193,7 +193,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{entryPoint}}/users/profile/1
+DELETE {{entryPoint}}/users/profile/3
 
 
 

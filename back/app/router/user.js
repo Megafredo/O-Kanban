@@ -1,7 +1,7 @@
 //~ IMPORTATIONS
 import { Router } from 'express';
 const router = Router();
-import { fetchOneUser, createUser, updateUser, deleteUser, signInUser } from "../controllers/userController.js"
+import { fetchOneUser, createUser, updateUser, deleteUser, signInUser } from "../controllers/userController.js";
 
 //* --------------------------- USER
 
