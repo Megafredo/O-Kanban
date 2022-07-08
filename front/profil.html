@@ -29,12 +29,15 @@
                 <div class="column is-full">
 
                     <div class="column nav">
+
+                        <button class=" nav-btn" id="profil">
+                            Profil
+                        </button>
+
                         <button class=" nav-btn" id="sign-in">
-                            Se connecter
+                            Se déconnecter
                         </button>
-                        <button class=" nav-btn" id="sign-up">
-                            S'inscrire
-                        </button>
+                        
                         <button class=" nav-btn" id="addListButton">
                             Ajouter une liste
                         </button>
@@ -45,10 +48,10 @@
          
                         <!-- CONNEXION -->
                         <div class="container__form container--signin">
-                            <form action="/users/signin" class="form" id="form2" method="POST">
+                            <form action="#" class="form" id="form2" method="POST">
                                 <h2 class="form_title"> &#9672; Connexion</h2>
-                                <input type="email" placeholder="Email" id="email_connexion" name="email_connexion" class="input" required />
-                                <input type="password" placeholder="Mot de passe" id="password_connexion" name="password_connexion" class="input" required />
+                                <input type="email" placeholder="Email" name="email_connexion" class="input" required />
+                                <input type="password" placeholder="Mot de passe" name="password_connexion" class="input" required />
                                 <a href="#" class="link">Mot de passe oublié ?</a>
                                 <button class="btn" type="submit">Se connecter</button>
                             </form>
@@ -195,7 +198,7 @@
                                                                     data-tag-color="">
                                                                     <li class="tag"><span id="title-tag">test</span>
                                                                     </li>
-                                                                    <button class="remove-tag">	&#x2716; </button>
+                                                                    <button AutoSize="true" class="remove-tag">	&#x2716; </button>
                                                                 </div>
                                                             </template>
                                                         </ul>

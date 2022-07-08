@@ -12,6 +12,7 @@ const list = {
      *  Initialisation global des fonctions
      */
      init() {
+     
         list.addListenerToActions();
         list.fetchListsFromAPI();
     },
@@ -120,8 +121,7 @@ const list = {
         const response = await fetch(listURL, options);
         
         if(response.ok){
-            const result = await response.json();
-            console.log("result: ", result);   
+            await response.json();  
             location.reload();
         }
         else{

@@ -159,15 +159,15 @@ DELETE  {{entryPoint}}/cards/1/tags/2
 # //* ---------------------------------------------
 
 ###
-GET {{entryPoint}}/users/profile/3
+GET {{entryPoint}}/users/profile/4
 
 ###
 POST {{entryPoint}}/users/signin
 Content-Type: application/json
 
 {
-    "email": "a@a.com",
-    "password": "a"
+    "email": "admin@admin.com",
+    "password": "admin"
 }
 
 ###
@@ -194,6 +194,9 @@ Content-Type: application/json
 
 ###
 DELETE {{entryPoint}}/users/profile/3
+
+###
+GET {{entryPoint}}/users/signout
 
 
 

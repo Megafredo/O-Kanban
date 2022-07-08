@@ -77,9 +77,7 @@ const dragCard = {
         const dataTransfer = JSON.parse(event.dataTransfer.getData('application/json'));
         let {originId, originOrder, originListId } = dataTransfer;
         
-        // console.log(event.target.closest('.panel-block').hasChildNodes());
-
-
+     
 
         //& ------------------------ ELEMENT ORIGIN CARD
         let getElemOriginCard = document.querySelector(`[data-card-id="${originId}"]`)
@@ -164,8 +162,6 @@ const dragCard = {
         }
 
 
-  
-        
         event.dataTransfer.clearData();
 
     },

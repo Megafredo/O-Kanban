@@ -5,7 +5,10 @@ import 'dotenv/config';
 import express from 'express';
 const app = express();
 import {router} from './app/router/index.js';
- 
+import { _404 } from './app/controllers/errorController.js';
+import { userMiddleware } from './app/middlewares/auth.js';
+import session from 'express-session';
+
 // ~ -------------------------------------------- CORS
 app.use((req, res, next) => {
     
@@ -20,10 +23,24 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-import myError, { _400, _401 ,_403, _500 } from './app/controllers/errorController.js';
+
+// ~ -------------------------------------------- SESSION
+app.use(session(
+    {
+        secret: process.env.SESSION_SECRET,
+        resave: true,
+        saveUninitialized: true,
+        cookie: { maxAge: 24 * 60 * 60 * 1000 }
+        //24 hours
+    }
+));
+
+//& great mw to keep the user connected !
+app.use(userMiddleware);
+
 
 app.use(router)
-app.use(myError);
+app.use(_404);
 
 const PORT = process.env.PORT ?? 3000
 app.listen(PORT, ()=>{

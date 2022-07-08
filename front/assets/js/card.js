@@ -274,7 +274,7 @@ const card = {
      * 
      */
      showEditCardModal(event) {
-        console.log('hello')
+    
         event.preventDefault();
 
         select.editCardModal.classList.add('is-active');
