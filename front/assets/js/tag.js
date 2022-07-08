@@ -78,7 +78,7 @@ const tag = {
         }
 
         const response = await fetch(tagUrl, options);
-        console.log("response: ", response);
+        
         
         if( response.ok ){
 
@@ -134,8 +134,8 @@ const tag = {
         
         if(response.ok){
             
-            const result = await response.json();
-            console.log("result: ", result);
+            await response.json();
+            
            
         }
         else{

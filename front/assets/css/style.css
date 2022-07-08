@@ -1,7 +1,8 @@
+html{ background-color: #FEF7FF;} 
 body {
   background-color: #FEF7FF;
   height: 100%;
-  min-height: 100vh;
+  margin: 0 auto;
   flex-direction: column;
   display: flex;
   justify-content: center;
@@ -106,11 +107,15 @@ body {
   padding: 0;
 }
 
+.column.nav{
+  margin: 0 auto;
+  text-align: center;
+}
 
 .columns{
   flex-wrap: wrap;
-}
 
+}
 
 .column.is-narrow{
   display: flex;
@@ -155,18 +160,20 @@ body {
   border: none;
 }
 
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 .panel-heading{
-  background-color: #361974 !important;
+  background-color: #361974;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .panel-block{
-  background-color: #FEF7FF !important;
+  background-color: #FEF7FF;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   border-radius: 0 0 0.5rem 0.5rem;
-  
 }
+
+/* ----------------------------------------------------------------------------------------------------------------- */
 
 .listDescription{
   color: aquamarine;
@@ -230,12 +237,12 @@ h2.has-text-white:hover{
 
 
 #tags li{
-  font-size: 8.5px;
+  font-size: 9.5px;
   border-radius: 2px 0 0 2px;
   color: rgb(255, 255, 255);
   background-color: #361974;
   margin-left: 0.16rem;
-  top: -2px;
+  /* top: -2px; */
   position: relative;
   transition: 0.25s ease;
   /* mix-blend-mode: difference; */
@@ -255,8 +262,12 @@ h2.has-text-white:hover{
   background-color: #eeeeee;
   transition: all 0.25s ease;
   position: relative;
-  right: 4px;
+  right: 5px;
   cursor: pointer;
+  /* top:1px; */
+  height: 19px;
+  font-size: 10px;
+  width: auto;
 }
 
 .content-tag{
@@ -450,4 +461,149 @@ button.nav-btn{
   margin: 1.5rem 0.5rem;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -----------------------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------------------------*/
+/* -----------------------------------------------------------------------------------------*/
+
+.container_global{
+  margin-bottom: 2rem;
+  width: 100%;
+
+}
+
+.container--signup{
+  display: none;
+  width: 50%;
+  margin: 0 auto;
+  animation: input_translate 0.5s alternate;
+}
+
+.container--signin{
+  width: 50%;
+  margin: 0 auto;
+  animation: input_translate 0.5s alternate;
+}
+
+.form_title{
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+#form2, #form1{
+  background-color: #361974;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 4px;
+  font-size: 18px;
+  box-shadow: rgb(99 99 99 / 80%) 0px 2px 8px 0px;
+}
+
+#form2 .input::placeholder, #form1 .input::placeholder{
+  color: #8959f0;
+ 
+}
+
+#form1 .input, #form2 .input{
+
+  background-color: #361974;
+  color:aqua;
+  margin-bottom: 0.5rem;
+  box-shadow: none;
+  border: none;
+  text-decoration: none;
+  outline: none;
+  border-bottom:1px solid #8959f0;
+  transition: all 0.25s ease;
+}
+
+#form1 .input:hover, #form2 .input:hover{
+  
+  box-shadow: none;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  border-bottom:4px solid aqua;
+  transition: all 0.25s ease;
+}
+
+#form1 .input:active, #form2 .input:active{
+  
+  box-shadow: none;
+  border: none;
+  text-decoration: none;
+  outline: none;
+  border-bottom:4px solid aqua;
+}
+
+#form1 .input:focus, #form2 .input:focus{
+  box-shadow: none;
+  border: none;
+  text-decoration: none;
+  outline: none;
+  border-bottom:4px solid aqua;
+  
+}
+
+.link{
+  color:aqua;
+  font-size: 0.7rem;
+  transition: all 0.35s ease;
+}
+
+.link:hover{
+  transition: all 0.35s ease;
+  color:white;
+
+}
+
+.btn{
+  border: none;
+  outline: none;
+  background-color: #361974;
+  cursor: pointer;
+  color: aqua;
+  font-size: 0.7rem;
+  transition: all 0.25s ease;
+  margin-top: 0.5rem;
+}
+.btn:hover{
+  color:white;
+  transition: all 0.25s ease;
+}
+
+@keyframes input_translate {
+  0% {
+    transform: translate(400px);
+    opacity: 0;
+  }
+
+60%{
+    transform: translate(-15px);
+    opacity: 0.9;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
 

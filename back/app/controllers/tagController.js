@@ -1,5 +1,5 @@
 //~import modules
-import _404, { _500 } from './errorController.js';
+import { _400, _401, _403, _404, _500 } from './errorController.js';
 import assert from 'assert';
 import { isValidHexadecimalColor } from './utils.js';
 import { Tag, Card } from '../models/index.js';
