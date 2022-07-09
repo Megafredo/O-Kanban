@@ -1,6 +1,6 @@
 // ~ IMPORTATION
 import { List } from '../models/index.js';
-import { _400, _401, _403, _404, _500 } from './errorController.js';
+import errorAPI from './errorController.js';
 import assert from 'assert';
 
 
@@ -23,7 +23,7 @@ async function fetchAllLists(req, res) {
         res.json(allLists);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -44,7 +44,7 @@ async function createList(req, res) {
         res.json(`La liste ${title} a bien été crée`);
         
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -66,7 +66,7 @@ async function fetchOneLIst(req, res) {
         res.json(list);
         
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 
 }
@@ -94,7 +94,7 @@ async function updateList(req, res) {
          return res.json(`Les informations de la liste a bien été mise à jour !`);
 
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -116,7 +116,7 @@ async function deleteList(req, res) {
 
 
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 

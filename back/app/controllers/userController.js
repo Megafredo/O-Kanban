@@ -1,5 +1,5 @@
 //~importations modules
-import { _400, _401, _403, _404, _500 } from './errorController.js';
+import errorAPI from './errorController.js';
 import { User } from '../models/index.js';
 
 import bcrypt from 'bcrypt';
@@ -20,14 +20,14 @@ const schema = new passwordValidator(); // Blacklist these values
 async function fetchOneUser(req, res) {
     try {
         const idUser = +req.params.id;
-        if (isNaN(idUser)) return _400({message:`Id doit être un nombre`}, req, res,);
+        if (isNaN(idUser)) return errorAPI({message:`Id doit être un nombre`}, req, res, 400);
 
         const user = await User.findByPk(idUser);
-        if (!user) return _400({message:`L'utilisateur n'existe pas`}, req, res);
+        if (!user) return errorAPI({message:`L'utilisateur n'existe pas`}, req, res, 400);
 
         res.status(200).json(user);
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -35,27 +35,28 @@ async function fetchOneUser(req, res) {
 async function signInUser(req, res) {
     try {
         const { email, password } = req.body;
+        console.log("req.body: ", req.body);
 
-        if (!emailValidator.validate(email)) return _401({message:`Email non valide`}, req, res);
+        if (!emailValidator.validate(email)) return errorAPI({message:`Email non valide`}, req, res, 401);
 
         const user = await User.findOne({
             where: { email }
         });
-        if (!user) return _400({message:`L'utilisateur n'existe pas`}, req, res);
+        
+        console.log("user: ", user);
+        if (!user) return errorAPI({message:`L'utilisateur n'existe pas`}, req, res, 401);
 
         const validePwd = await bcrypt.compare(password, user.password);
-        if (!validePwd) return _401({message:`Email ou mot de passe non valide`}, req, res);
+        if (!validePwd) return errorAPI({message:`Email ou mot de passe non valide`}, req, res, 401);
 
-    
-        //&------------------- SESSION
+        //& SESSION
         req.session.user = user;
         //delete datavalues password to protect data
         delete user.dataValues.password;
-        //&------------------- SESSION
 
         res.status(200).json(`Bienvenue ${user.firstname} ${user.lastname.toUpperCase()}`);
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -63,18 +64,19 @@ async function signInUser(req, res) {
 async function createUser(req, res) {
     try {
         let { firstname, lastname, email, password, passwordConfirm } = req.body;
+        console.log("req.body: ", req.body);
 
         const user = await User.findOne({ where: { email } });
 
         // Les vérifications
 
-        if (firstname === undefined) return _401({message:`Merci de renseigner un "Prénom"`}, req, res);
-        if (lastname === undefined) return _401({message:`Merci de renseigner un "Nom"`}, req, res);
+        if (firstname === undefined) return errorAPI({message:`Merci de renseigner un "Prénom"`}, req, res, 401);
+        if (lastname === undefined) return errorAPI({message:`Merci de renseigner un "Nom"`}, req, res, 401);
 
         if (user) return _401(`L'email existe déjà`);
-        if (!emailValidator.validate(email)) return _401({message:`Email non valide`}, req, res);
-        if (!schema.validate(password)) return _401({message:`Le mot de passe ne remplis pas les contraintes sécurités`}, req, res);
-        if (password !== passwordConfirm) return _401({message:`Les mots de passe ne sont pas identiques`}, req, res);
+        if (!emailValidator.validate(email)) return errorAPI({message:`Email non valide`}, req, res, 401);
+        if (!schema.validate(password)) return errorAPI({message:`Le mot de passe ne remplis pas les contraintes sécurités`}, req, res, 401);
+        if (password !== passwordConfirm) return errorAPI({message:`Les mots de passe ne sont pas identiques`}, req, res, 401);
 
         // Une fois toute les sécurités passé alors on crée l'utilisateur
         // Dans un premier temps on Hash le password
@@ -89,7 +91,7 @@ async function createUser(req, res) {
 
         res.status(201).json(`L'utilisateur ${firstname} ${lastname}, à bien été crée !`);
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -97,16 +99,16 @@ async function createUser(req, res) {
 async function updateUser(req, res) {
     try {
         const idUser = +req.params.id;
-        if (isNaN(idUser)) return _400({message:`Id doit être un nombre`}, req, res);
+        if (isNaN(idUser)) return errorAPI({message:`Id doit être un nombre`}, req, res, 400);
 
         const user = await User.findByPk(idUser);
-        if (!user) return _400({message:`L'utilisateur n'existe pas`}, req, res);
+        if (!user) return errorAPI({message:`L'utilisateur n'existe pas`}, req, res, 400);
 
         let { firstname, lastname, email, password, passwordConfirm } = req.body;
 
-        if (password !== passwordConfirm) return _401({message:`Les mots de passe ne sont pas identiques`}, req, res);
-        if (!emailValidator.validate(email)) return _401({message:`Email non valide`}, req, res);
-        if (!schema.validate(password)) return _401({message:`Le mot de passe ne remplis pas les contraintes sécurités`}, req, res);
+        if (password !== passwordConfirm) return errorAPI({message:`Les mots de passe ne sont pas identiques`}, req, res, 401);
+        if (!emailValidator.validate(email)) return errorAPI({message:`Email non valide`}, req, res, 401);
+        if (!schema.validate(password)) return errorAPI({message:`Le mot de passe ne remplis pas les contraintes sécurités`}, req, res, 401);
 
         firstname === undefined ? (firstname = user.firstname) : firstname;
         lastname === undefined ? (lastname = user.lastname) : lastname;
@@ -121,7 +123,7 @@ async function updateUser(req, res) {
         res.status(200).json(`Vos informations ont bien été mis à jour !`);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -130,10 +132,10 @@ async function deleteUser(req, res) {
     try {
 
         const idUser = +req.params.id
-        if(isNaN(idUser)) return _400({message:`Id doit être un nombre`}, req, res);
+        if(isNaN(idUser)) return errorAPI({message:`Id doit être un nombre`}, req, res, 400);
 
         const user = await User.findOne({where: {id:idUser}})
-        if (!user) return _401({message:`L'utilisateur n'existe pas`}, req, res);
+        if (!user) return errorAPI({message:`L'utilisateur n'existe pas`}, req, res, 400);
 
         await User.destroy({where:{id: idUser}});
 
@@ -141,7 +143,7 @@ async function deleteUser(req, res) {
 
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -150,11 +152,11 @@ async function deleteUser(req, res) {
 async function signOutUser(req, res) {
     try {
 
-        req.session.user ? res.status(200).json(`L'utilisateur [ ${req.session.user.firstname} ${req.session.user.lastname} ] à bien été déconnecté`) : res.status(400).json(`Aucun utilisateur n'a été authentifié`);
+        req.session.user ? res.status(200).json(`L'utilisateur [ ${req.session.user.firstname} ${req.session.user.lastname} ] à bien été déconnecté`) : errorAPI(`Aucun utilisateur n'a été authentifié`,req, res, 400);
         req.session.destroy();
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 

@@ -99,6 +99,7 @@ body {
 .card-lists {
   overflow-x: auto;
   margin: 0 auto;
+  justify-content: center;
 }
 
 .card-description {
@@ -193,15 +194,16 @@ body {
   transform: translateY(-3px);
 }
 
-h2.has-text-white{
+h2.editTitle{
+  color: #fff;
   cursor: pointer;
   user-select: none;
   font-size: 18px;
   transition: all 0.2s ease;
 }
-h2.has-text-white:hover{
+h2.editTitle:hover{
   transform: translateX(5px);
-  color: #8959f0 !important;
+  color: #8959f0;
 }
 
 .listDescription{
@@ -379,7 +381,7 @@ button.nav-btn{
 .nav-btn:hover{
   transform-origin: center;
   transform: translateY(-5px);
-  color: #8959f0 !important;
+  color: #8959f0;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   transition: 0.25s ease;
   outline: none;
@@ -403,7 +405,7 @@ button.nav-btn{
   outline: none;
 }
 
-#edit-title-list, #edit-description-list{
+.edit-title-list, .edit-description-list{
   border: none;
   outline: none;
   box-shadow: none;
@@ -413,14 +415,14 @@ button.nav-btn{
   transition: all 0.3s ease;
   
 }
-#edit-title-list:hover, #edit-description-list:hover{ 
+.edit-title-list:hover, .edit-description-list:hover{ 
   border-bottom: 1px solid aquamarine;
 }
-#edit-title-list:focus, #edit-description-list:focus{ 
+.edit-title-list:focus, .edit-description-list:focus{ 
   border-bottom: 1px solid aquamarine;
 }
 
-#edit-title-list::placeholder, #edit-description-list::placeholder{
+.edit-title-list::placeholder, .edit-description-list::placeholder{
   color: rgb(170, 105, 255);
 }
 
@@ -533,7 +535,7 @@ button.nav-btn{
   text-decoration: none;
   outline: none;
   border-bottom:1px solid #8959f0;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
 }
 
 #form1 .input:hover, #form2 .input:hover{
@@ -543,7 +545,7 @@ button.nav-btn{
   outline: none;
   text-decoration: none;
   border-bottom:4px solid aqua;
-  transition: all 0.25s ease;
+  transition: all 0.15s ease;
 }
 
 #form1 .input:active, #form2 .input:active{

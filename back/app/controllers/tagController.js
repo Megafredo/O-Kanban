@@ -1,5 +1,5 @@
 //~import modules
-import { _400, _401, _403, _404, _500 } from './errorController.js';
+import errorAPI from './errorController.js';
 import assert from 'assert';
 import { isValidHexadecimalColor } from './utils.js';
 import { Tag, Card } from '../models/index.js';
@@ -17,7 +17,7 @@ async function fetchAllTags(req, res) {
         res.json(tags);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -32,7 +32,7 @@ async function createTag(req, res) {
         res.json(`Le tag ${req.body.name} a bien été crée`);
 
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -53,7 +53,7 @@ async function fetchOneTag(req, res) {
         res.json(oneTag);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -80,7 +80,7 @@ async function updateTag(req, res) {
         return res.json(`Les informations du label a bien été mis à jour`);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -105,7 +105,7 @@ async function deleteTag(req, res) {
         res.json(`Le tag a bien été supprimé !`);
 
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -147,7 +147,7 @@ async function upsertTag(req, res) {
         res.json(`Le tag à bien été lié`);
     
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 };
 
@@ -175,7 +175,7 @@ async function addAsWithTag(req,res){
         res.json(` Le tag "${fetchOneTag.name}" à bien été associé !`)
 
     } catch (err) {
-       _500(err, req, res)
+        errorAPI(err, req, res, 500);
     }
  };
 
@@ -205,7 +205,7 @@ async function fetchAllTagsByCardId(req,res){
         res.json(allTags);
 
     } catch (err) {
-        _500(err, req, res)
+        errorAPI(err, req, res, 500);
     }
 
 };
@@ -233,7 +233,7 @@ async function deleteAsWithTag(req,res){
         res.json(`Le tag "${fetchOneTag.name}" à bien été dissocié !`)
 
     } catch (err) {
-       _500(err, req, res)
+        errorAPI(err, req, res, 500);
     }
  };
 

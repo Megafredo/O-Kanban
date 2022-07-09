@@ -1,6 +1,6 @@
 // ~ IMPORTATIONS
 import { Card, List } from '../models/index.js';
-import { _400, _401, _403, _404, _500 } from './errorController.js';
+import errorAPI from './errorController.js';
 import assert from 'assert';
 import { isValidHexadecimalColor } from './utils.js';
 
@@ -15,7 +15,7 @@ async function fetchAllCards(req, res) {
         });
         res.json(allCards);
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -33,7 +33,7 @@ async function createCard(req, res) {
 
         res.json(`La carte à bien été crée`);
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -55,7 +55,7 @@ async function fetchOneCard(req, res) {
 
         res.json(oneCard);
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -77,7 +77,7 @@ async function updateCard(req, res) {
 
         res.json(`Les informations ont été mis à jour`);
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -98,7 +98,7 @@ async function deleteCard(req, res) {
 
         res.json(`La carte à bien été supprimé !`);
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -119,7 +119,7 @@ async function fetchAllCardsByListId(req, res) {
 
         res.json(allCards);
     } catch (err) {
-        _404(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 

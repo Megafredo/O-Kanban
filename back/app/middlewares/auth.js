@@ -1,27 +1,27 @@
 //~ ----------------------------------------------------------------- IMPORTATION MODULE
-import { _500, _403 } from '../controllers/errorController.js';
+import errorAPI from '../controllers/errorController.js';
 
 //~ ----------------------------------------------------------------- AUTH MIDDLEWARE
 async function auth(req, res, next) {
     try {
-        if (!req.session.user) return res.json('You need to be connected to create a super Kanban !');
+        if (!req.session.user) return errorAPI({message:'You need to be connected to create a super Kanban !'}, req, res, 401);
 
         next();
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
 //~ ----------------------------------------------------------------- ADMIN
 async function admin(req, res, next) {
     try {
-        if (req.session.user.email === 'admin@admin.com') return res.json('Welcome home Super Admin !');
+        if (req.session.user.email === 'admin@admin.com') return res.status(200).json('Welcome home Super Admin !');
 
-        if (req.session.user.email !== 'admin@admin.com') return res.json(`You're not super admin, sorry you cannot access the super Kanban yet!`);
+        if (req.session.user.email !== 'admin@admin.com') return errorAPI({message:`You're not super admin, sorry you cannot access the super Kanban yet!`}, req, res, 403);
 
         next();
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 
@@ -32,7 +32,7 @@ async function userMiddleware(req, res, next) {
 
         next();
     } catch (err) {
-        _500(err, req, res);
+        errorAPI(err, req, res, 500);
     }
 }
 

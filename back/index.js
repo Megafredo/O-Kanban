@@ -5,7 +5,7 @@ import 'dotenv/config';
 import express from 'express';
 const app = express();
 import {router} from './app/router/index.js';
-import { _404 } from './app/controllers/errorController.js';
+import errorAPI from './app/controllers/errorController.js';
 import { userMiddleware } from './app/middlewares/auth.js';
 import session from 'express-session';
 
@@ -22,6 +22,10 @@ app.use((req, res, next) => {
 // ~ -------------------------------------------- JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// ~ -------------------------------------------- HELMET
+import helmet from 'helmet';
+app.use(helmet());
 
 
 // ~ -------------------------------------------- SESSION
@@ -40,9 +44,16 @@ app.use(userMiddleware);
 
 
 app.use(router)
-app.use(_404);
 
-const PORT = process.env.PORT ?? 3000
-app.listen(PORT, ()=>{
-    console.log(`Server started on http://localhost:${PORT}`);
+//~ Error 404
+
+app.use((req, res) => {
+    errorAPI({message: 'Error 404 Page Not Found'}, req, res, 400)
+});
+
+//~ Launch Server 
+const PORT = process.env.PORT ??  3000; 
+ 
+app.listen(PORT, () => { 
+console.log(`🚀\x1b[1;35m Launch server on http://localhost:${PORT}\x1b[0m`); 
 });

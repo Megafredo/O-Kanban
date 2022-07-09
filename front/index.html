@@ -58,19 +58,16 @@
                         <div class="container__form container--signup hidden">
                             <form action="/users/signup" class="form" id="form1" method="POST">
                                 <h2 class="form_title"> &#9672; Inscription</h2>
-                                <input type="text" placeholder="Utilisateur" class="input" name="username" required/>
-                                <input type="email" placeholder="Email" class="input" name="email" required/>
-                                <input type="password" placeholder="Mot de passe" name="password" class="input" required/>
-                                <input type="password" placeholder="Confirmation" name="password_confirm" class="input" required/>
+                                <input type="text" placeholder="Prénom" id="firstname_inscription" class="input" name="firstname" required/>
+                                <input type="text" placeholder="Nom" id="lastname_inscription" class="input" name="lastname" required/>
+                                <input type="email" placeholder="Email" id="email_inscription" class="input" name="email" required/>
+                                <input type="password" placeholder="Mot de passe" id="password_inscription" name="password" class="input" required/>
+                                <input type="password" placeholder="Confirmation" id="password_confirm_inscription" name="password_confirm" class="input" required/>
                                 <button class="btn" type="submit">S'inscrire</button>
                             </form>
                         </div>
                     
-                       
                     </div>
-
-
-
 
 
 
@@ -90,7 +87,7 @@
 
                                             <div class="column">
 
-                                                <h2 class="has-text-white editTitle" id="list-order">
+                                                <h2 class="editTitle" id="list-order">
                                                     Perso</h2>
                                                 <p class="listDescription">test</p>
 
@@ -101,10 +98,10 @@
                                                         class="list-user-id">
                                                     <div class="field has-addons">
                                                         <div class="control" id="control-input-edit">
-                                                            <input type="text" id="edit-title-list"
+                                                            <input type="text" class="edit-title-list"
                                                                 class="input is-small" name="list-name" value=""
                                                                 placeholder="Titre">
-                                                            <input type="text" id="edit-description-list"
+                                                            <input type="text" class="edit-description-list"
                                                                 class="input is-small" name="list-description" value=""
                                                                 placeholder="Description">
                                                         </div>
